@@ -1,11 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Main from './pages/Main';
+import MainPage from './pages/MainPage';
+import BonoPage from './pages/BonoPage';
+import { User1 } from './data/Data';
+
+const user = User1
 
 function App() {
   return (
-    <Main />
+    <BonoPage userName={user.name} />
   );
 }
 
