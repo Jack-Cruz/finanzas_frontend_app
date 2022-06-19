@@ -1,48 +1,79 @@
-import React from "react";
-import logo from "../images/easy_finanzas.jpg";
+import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import React from 'react'
+import UserName from '../components/UserName'
+import pen from '../images/pen-icon.webp'
+import wallet from '../images/waller.png'
+import statistic from '../images/icon-statistics-1.jpg'
+import { Link } from 'react-router-dom'
 
-export default function Main() {
+interface Props {
+  userName: string;
+}
+
+export default function MainPage({userName}: Props) {
   return (
-    <>
-      <div className="container p-4">
-        <div className="row">
-          <div className="col-md-7">
-            <h1 className="text-dark">Easy-Finanzas</h1>
-          </div>
-          <div className="col-md-5">
-            <div className="row">
-              <button type="button" className="btn btn-primary col-md-5">
-                Iniciar Sesion
-              </button>
-              <div className="col-md-2"></div>
-              <button type="button" className="btn btn-primary col-md-5">
-                Registro
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br />
+    <Box sx={{ display: "flex", flexDirection: "column"}}>
+      <Grid container justifyContent="flex-end">
+        <Grid item>
+          <UserName userName={userName} />
+        </Grid>
+      </Grid>
+      <Box sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", height: '80vh'}}>
+        <Card sx={{ maxWidth: 200}}>
+          <CardActionArea component={Link} to="/easy-finanzas/crearbono">
+            <CardMedia 
+              component="img"
+              height="100"
+              width="100"
+              image={pen}
+              alt="pen"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Interfaz Intuitivo
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
 
-      <div className="row bg-secondary">
-        <div className="col-md-7">
-          <img src={logo} alt="imagen finanzas_logo" width="850" height="380" />
-        </div>
-        <div className="col-md-5">
-          <h1 className="text-center align-middle p-5 mt-5 text-dark bg-secondary">
-            Manejar tus finanzas nunca fue tan fácil
-          </h1>
-        </div>
-      </div>
-
-      <div className="row bg-primary p-5">
-        <div className="col-md-3 p-5">
-            <h2 className="text-center">Easy-Finanzas</h2>
-        </div>
-        <div className="col-md-9 p-5">
-            <p className="text-dark text-center">Copyright © Easy Finanzas 2022 Todos los derechos reservados.</p>
-        </div>
-      </div>
-    </>
-  );
+        <Card sx={{ maxWidth: 200}}>
+          <CardActionArea component={Link} to="/easy-finanzas/listabonos">
+            <CardMedia 
+              component="img"
+              height="100"
+              width="100"
+              image={wallet}
+              alt="wallet"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Historial de operaciones
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+        <Card sx={{ maxWidth: 200}}>
+          <CardActionArea component={Link} to="/easy-finanzas/flujocaja">
+            <CardMedia 
+              component="img"
+              height="100"
+              width="100"
+              image={statistic}
+              alt="statistic"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Resultados rápidos
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Box>
+      <Grid container justifyContent="flex-end">
+        <Grid item>
+          <Typography color="blue">¿Necesita ayuda?</Typography>
+        </Grid>
+      </Grid>
+    </Box>
+  )
 }

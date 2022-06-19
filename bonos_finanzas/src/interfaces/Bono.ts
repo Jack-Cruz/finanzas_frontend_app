@@ -15,3 +15,24 @@ export interface Bono {
     flotacion: number
     cavali: number
 }
+
+export interface BonoResumen {
+ id: number,
+ precio: number,
+ duracion: number,
+ duracion_modificada: number,
+ convexidad: number,
+ TIR: number
+}
+
+export interface FlujoCaja {
+  id: number,
+  monto: number,
+  bono: number,
+  cupon: number,
+  cuota: number,
+  escudo: number,
+  amortizacion: number,
+  flujo_bonista: number,
+  flujo_actual: number,
+};
