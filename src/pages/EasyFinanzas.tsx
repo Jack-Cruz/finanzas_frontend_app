@@ -14,11 +14,11 @@ export default function EasyFinanzas() {
           </div>
           <div className="col-md-5">
             <div className="row">
-              <Link to={`${location.state}/signin`}>
+              <Link to={`/signin`}>
                 Iniciar Sesion
               </Link>
               <div className="col-md-2"></div>
-              <Link to={`${location.state}/signup`}>
+              <Link to={`/signup`}>
                 Registro
               </Link>
             </div>
