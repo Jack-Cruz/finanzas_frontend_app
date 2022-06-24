@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
@@ -6,38 +6,30 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import UserName from '../components/UserName';
 import { BonoResumen } from '../interfaces/Bono';
 
-interface Props {
-  userName: string;
-}
 
 const bonos: BonoResumen[] = [
   {
-    id: 1,
-    precio: 100,
-    duracion: 1.34,
-    duracion_modificada: 1.35,
+    idresumen: '1',
+    idbono: '2',
+    precio: 12.2,
+    duracion: 2,
+    duracionmodificada: 2,
     convexidad: 1.2,
-    TIR: 1.4
+    TIR: 3.2
   },
   {
-    id: 2,
+    idresumen: '2',
+    idbono: '2',
     precio: 100,
     duracion: 1.55,
-    duracion_modificada: 1.85,
+    duracionmodificada: 1.85,
     convexidad: 2.2,
     TIR: 1.9
-  },
-  {
-    id: 3,
-    precio: 100,
-    duracion: 2.0,
-    duracion_modificada: 1.5,
-    convexidad: 2.1,
-    TIR: 1.1
-  },
+  }
 ];
 
-export default function ListaBonos({ userName }: Props) {
+export default function ListaBonos() {
+  
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Grid container>
@@ -47,7 +39,7 @@ export default function ListaBonos({ userName }: Props) {
           </Typography>
         </Grid>
         <Grid item>
-          <UserName userName={userName} />
+          <UserName userName='asd' />
         </Grid>
       </Grid>
       <Table size="small" sx={{ mt: 4 }}>
@@ -64,11 +56,11 @@ export default function ListaBonos({ userName }: Props) {
         </TableHead>
         <TableBody>
           {bonos.map((bono, index) => (
-            <TableRow key={bono.id}>
+            <TableRow key={bono.idresumen}>
               <TableCell>{index}</TableCell>
               <TableCell>{bono.precio}</TableCell>
               <TableCell>{bono.duracion}</TableCell>
-              <TableCell>{bono.duracion_modificada}</TableCell>
+              <TableCell>{bono.duracionmodificada}</TableCell>
               <TableCell>{bono.convexidad}</TableCell>
               <TableCell>{bono.TIR}</TableCell>
               <TableCell>

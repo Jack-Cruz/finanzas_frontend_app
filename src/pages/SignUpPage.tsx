@@ -1,14 +1,44 @@
 import { Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import authService from "../api/auth";
+import { Bonista } from '../interfaces/Bonista';
+
+const initBonista: Bonista = {
+  nombre: '',
+  apellido: '',
+  DNI: '',
+  correo: '',
+  celular: '',
+  usuario: '',
+  contrasenia: '',
+  RUC: '',
+  direccion: '',
+  region: '',
+  provincia: '',
+  distrito: ''
+}
 
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const [ bonista, setBonista ] = useState<Bonista>(initBonista);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`/signin`);
+    authService.register(bonista)
+      .then(() => {
+        navigate(`/signin`);
+      })
+      .catch((e: Error) => {
+        window.alert("Error de sistema")
+        console.log(e)
+      })
   }
+
+  const handleInput = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = target;
+    setBonista({ ...bonista, [name]: value });
+  };
 
   return (
     <Container
@@ -52,35 +82,45 @@ export default function SignUpPage() {
             <TextField
               label="Nombre"
               variant="outlined"
-              // onChange={handleInput}
+              name="nombre"
+              value={bonista.nombre}
+              onChange={handleInput}
               fullWidth
               sx={{ mt: 2 }}
             />
             <TextField
               label="Apellido"
               variant="outlined"
-              // onChange={handleInput}
+              name="apellido"
+              value={bonista.apellido}
+              onChange={handleInput}
               sx={{ mt: 2 }}
               fullWidth
             />
             <TextField
               label="DNI"
               variant="outlined"
-              // onChange={handleInput}
+              name="DNI"
+              value={bonista.DNI}
+              onChange={handleInput}
               sx={{ mt: 2 }}
               fullWidth
             />
             <TextField
               label="Correo Electrónico"
               variant="outlined"
-              // onChange={handleInput}
+              name="correo"
+              value={bonista.correo}
+              onChange={handleInput}
               sx={{ mt: 2 }}
               fullWidth
             />
             <TextField
               label="Celular"
               variant="outlined"
-              // onChange={handleInput}
+              name="celular"
+              value={bonista.celular}
+              onChange={handleInput}
               sx={{ mt: 2 }}
               fullWidth
             />
@@ -96,32 +136,39 @@ export default function SignUpPage() {
             <TextField
               label="Usuario"
               variant="outlined"
-              // onChange={handleInput}
+              name="usuario"
+              value={bonista.usuario}
+              onChange={handleInput}
               fullWidth
               sx={{ mt: 2 }}
             />
             <TextField
               label="Contraseña"
               variant="outlined"
-              // onChange={handleInput}
+              name="contrasenia"
+              value={bonista.contrasenia}
+              onChange={handleInput}
               sx={{ mt: 2 }}
               fullWidth
             />
             <TextField
               label="RUC"
               variant="outlined"
-              // onChange={handleInput}
+              name="RUC"
+              value={bonista.RUC}
+              onChange={handleInput}
               sx={{ mt: 2 }}
               fullWidth
             />
             <TextField
               label="Dirección"
               variant="outlined"
-              // onChange={handleInput}
+              name="direccion"
+              value={bonista.direccion}
+              onChange={handleInput}
               sx={{ mt: 2 }}
               fullWidth
             />
-
           </Grid>
         </Grid>
         <Button type="submit" variant="outlined" sx={{ bgcolor: "secondary.main"}}>

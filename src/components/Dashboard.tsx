@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import {
   Box,
+  Button,
   Container,
   CssBaseline,
   Divider,
@@ -20,6 +21,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/usercontext";
 
 const drawerWidth: number = 240;
 
@@ -52,12 +54,30 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Dashboard(props: any) {
   const [open, setOpen] = React.useState(true);
+  const { state } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const navigateTo = (url: string) => {
+    navigate(url);
+  }
+
+  const closeSesion = (e: React.MouseEvent<HTMLButtonElement>) => {
+    state.idusuario = null;
+    state.usuario = null;
+    navigateTo('/signin')
+  }
+
+  useEffect(() => {
+    console.log(state.idusuario)
+    if(state.idusuario == null){
+      navigate('/');
+    }
+  },[])
 
   return (
     <>
@@ -98,7 +118,8 @@ export default function Dashboard(props: any) {
               <ListItemText primary="Operaciones" primaryTypographyProps={{variant: "h6"}} />
             </ListItemButton>
           </List>
-          <Toolbar
+          <Button
+            onClick={closeSesion}
             sx={{
               px: [1],
               bgcolor:"secondary.main"
@@ -108,7 +129,7 @@ export default function Dashboard(props: any) {
               <LogoutIcon />
             </IconButton>
             <Typography sx={{ pl: [3], color:"black" }} variant="h6">Cerrar Sesion</Typography>
-          </Toolbar>
+          </Button>
         </Drawer>
         <Box
           component="main"

@@ -1,21 +1,21 @@
 import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import UserName from '../components/UserName'
 import pen from '../images/pen-icon.webp'
 import wallet from '../images/waller.png'
 import statistic from '../images/icon-statistics-1.jpg'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../context/usercontext'
 
-interface Props {
-  userName: string;
-}
+export default function MainPage() {
 
-export default function MainPage({userName}: Props) {
+  const { state } = useContext(UserContext);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column"}}>
       <Grid container justifyContent="flex-end">
         <Grid item>
-          <UserName userName={userName} />
+          <UserName userName={state.usuario ? state.usuario : 'No usuario'} />
         </Grid>
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", height: '80vh'}}>
@@ -53,7 +53,7 @@ export default function MainPage({userName}: Props) {
           </CardActionArea>
         </Card>
         <Card sx={{ maxWidth: 200}}>
-          <CardActionArea component={Link} to="/easy-finanzas/flujocaja">
+          <CardActionArea component={Link} to="/easy-finanzas/flujocaja/1">
             <CardMedia 
               component="img"
               height="100"

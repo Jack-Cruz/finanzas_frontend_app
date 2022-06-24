@@ -1,7 +1,9 @@
 export interface UserState {
-    id: string | null;
+    idusuario: string | null;
+    usuario: string | null;
 }
 
 export const initialUserState: UserState = {
-    id: null
+    idusuario: '1',
+    usuario: 'Pedro'
 }

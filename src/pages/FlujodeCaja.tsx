@@ -1,42 +1,62 @@
 import { Box, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import apiFlujo from '../api/api.flujo';
 import UserName from '../components/UserName';
 import { FlujoCaja } from '../interfaces/Bono'
 
 const FlujodeCaja1: FlujoCaja[] = [
   {
-    id: 1,
-    monto: 1000,
-    cuota: 1000,
-    bono: 100,
-    amortizacion: 100,
-    cupon: 100,
-    escudo: 1000,
-    flujo_bonista: 100,
-    flujo_actual: 100,
+    idflujo: '1',
+    idbono: '1',
+    n: 1,
+    bono: 12,
+    interes: 12,
+    cuota: 123,
+    amortizacion: 123,
+    prima: 12.2,
+    escudo: 1.2,
+    flujoemisor: 2.3,
+    flujoemisorescudo: 3.4,
+    flujobonista: 123,
+    flujoactual: 12,
+    faplazo: 1.2,
+    convexidad: 1
   },
   {
-    id: 2,
-    monto: 10,
-    cuota: 10,
-    bono: 1,
-    amortizacion: 1,
-    cupon: 1,
-    escudo: 100,
-    flujo_bonista: 10,
-    flujo_actual: 10,
+    idflujo: '2',
+    idbono: '1',
+    n: 1,
+    bono: 12,
+    interes: 12,
+    cuota: 123,
+    amortizacion: 123,
+    prima: 12.2,
+    escudo: 1.2,
+    flujoemisor: 2.3,
+    flujoemisorescudo: 3.4,
+    flujobonista: 123,
+    flujoactual: 12,
+    faplazo: 1.2,
+    convexidad: 1
   },
   {
-    id: 3,
-    monto: 105,
-    cuota: 105,
-    bono: 100,
-    amortizacion: 10,
-    cupon: 10,
-    escudo: 11,
-    flujo_bonista: 11,
-    flujo_actual: 11,
-  },
+    idflujo:'3',
+    idbono: '1',
+    n: 1,
+    bono: 12,
+    interes: 12,
+    cuota: 123,
+    amortizacion: 123,
+    prima: 12.2,
+    escudo: 1.2,
+    flujoemisor: 2.3,
+    flujoemisorescudo: 3.4,
+    flujobonista: 123,
+    flujoactual: 12,
+    faplazo: 1.2,
+    convexidad: 1
+  }
 ];
 
 interface Props {
@@ -44,6 +64,20 @@ interface Props {
 }
 
 export default function FlujodeCaja({userName}: Props) {
+  const [ flujos, setFlujos] = useState<FlujoCaja[]>([])
+  const { id } = useParams();
+
+  useEffect(() => {
+    id && apiFlujo.get(id)
+      .then((response: any) => {
+        setFlujos(response.data);
+      })
+      .catch((error: Error) => {
+        window.alert('Error de sistema')
+        console.log(error)
+      })
+  }, [])
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Grid container>
@@ -60,28 +94,28 @@ export default function FlujodeCaja({userName}: Props) {
         <TableHead>
           <TableRow>
             <TableCell>Nº</TableCell>
-            <TableCell>Monto</TableCell>
             <TableCell>Bono</TableCell>
-            <TableCell>Cupon (Interes)</TableCell>
+            <TableCell>Interes</TableCell>
             <TableCell>Cuota</TableCell>
-            <TableCell>Escudo</TableCell>
             <TableCell>Amortizacion</TableCell>
-            <TableCell>Flujo Bonista</TableCell>
-            <TableCell>Flujo Actual</TableCell>
+            <TableCell>Prima</TableCell>
+            <TableCell>Escudo</TableCell>
+            <TableCell>Flujo bonista</TableCell>
+            <TableCell>Flujo actual</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {FlujodeCaja1.map((flujo, index) => (
-            <TableRow key={flujo.id}>
+            <TableRow key={flujo.idflujo}>
               <TableCell>{index}</TableCell>
-              <TableCell>{flujo.monto}</TableCell>
               <TableCell>{flujo.bono}</TableCell>
+              <TableCell>{flujo.interes}</TableCell>
               <TableCell>{flujo.cuota}</TableCell>
-              <TableCell>{flujo.cupon}</TableCell>
-              <TableCell>{flujo.escudo}</TableCell>
               <TableCell>{flujo.amortizacion}</TableCell>
-              <TableCell>{flujo.flujo_bonista}</TableCell>
-              <TableCell>{flujo.flujo_actual}</TableCell>
+              <TableCell>{flujo.prima}</TableCell>
+              <TableCell>{flujo.escudo}</TableCell>
+              <TableCell>{flujo.flujobonista}</TableCell>
+              <TableCell>{flujo.flujoactual}</TableCell>
             </TableRow>
           ))}
         </TableBody>

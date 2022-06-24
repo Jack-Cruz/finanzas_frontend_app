@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Grid,
@@ -9,23 +9,46 @@ import {
   Button,
 } from "@mui/material";
 import finanzas from "../images/easy_finanzas.jpg";
-import { UserCredentials } from "../interfaces/User";
+import { Credentials } from "../interfaces/Bonista";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/usercontext";
+import authService from "../api/auth";
+import { setIdUsuario, setUsuario } from "../context/userreducer";
 
-const initCredentials: UserCredentials = {
-  email: "",
-  password: "",
+const initCredentials: Credentials = {
+  usuario: "",
+  contrasenia: "",
 };
 
 export default function SignInPage() {
-  const [userCredentials, setUserCredentials] = React.useState(initCredentials);
+  const [credentials, setCredentials] = React.useState(initCredentials);
+  const { state, dispatch } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`/easy-finanzas`);
+    authService.login(credentials)
+      .then((response: any) => {
+        dispatch(setIdUsuario(response.data.idusuario))
+        dispatch(setUsuario(response.data.usuario))
+        navigate(`/easy-finanzas`);              
+      })
+      .catch((error: Error) => {
+        console.error(error);
+        window.alert("Error del sistema");
+      })
+    
   };
+
+  const handleInput = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = target;
+    setCredentials({ ...credentials, [name]: value });
+  };
+
+  const navigateTo = (url: string) => {
+    navigate(url);
+  }
 
   return (
     <Container sx={{ backgroundColor: "#DAE6E9", height: "100vh" }}>
@@ -85,18 +108,19 @@ export default function SignInPage() {
                 <TextField
                   label="Usuario"
                   variant="outlined"
-                  name="email"
-                  // value={bono.valor_nominal}
-                  // onChange={handleInput}
+                  name="usuario"
+                  value={credentials.usuario}
+                  onChange={handleInput}
                   fullWidth
                   sx={{ mt: 2, backgroundColor: "#fff" }}
                 />
                 <TextField
                   label="Password"
                   variant="outlined"
-                  name="password"
-                  // value={bono.valor_nominal}
-                  // onChange={handleInput}
+                  name="contrasenia"
+                  type="password"
+                  value={credentials.contrasenia}
+                  onChange={handleInput}
                   fullWidth
                   sx={{ mt: 2, backgroundColor: "#fff" }}
                 />

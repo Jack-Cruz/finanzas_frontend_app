@@ -1,9 +1,9 @@
 
-import { request } from './api'
+import request from './api'
 
 const apiBonos = {
-    get: async (id: number) => await request.get(`/bonos/${id}`),
-    post: async (id: number, body: {}) => await request.post(`/bonos/${id}`, body),
+    get: async (id: string) => await request.get(`/bonos/${id}`),
+    post: async (userId: string, body: {}) => await request.post(`/bonosuser/${userId}`, body),
 }
 
 export default apiBonos

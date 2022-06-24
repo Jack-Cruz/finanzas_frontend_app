@@ -1,10 +1,16 @@
 export enum ActionType {
-    SetId
+    SetIdUsuario,
+    SetUsuario
 }
 
-export interface SetId {
-    type: ActionType.SetId;
+export interface SetIdUsuario {
+    type: ActionType.SetIdUsuario;
     payload: string;
 }
 
-export type UserActions = SetId;
+export interface SetUsuario {
+    type: ActionType.SetUsuario;
+    payload: string;
+}
+
+export type UserActions = SetIdUsuario | SetUsuario;

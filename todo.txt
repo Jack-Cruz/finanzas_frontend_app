@@ -1,0 +1,5 @@
+- Estilizar el fondo de la tabla de lista de bonos
+- Colocar un menú item de la Región, Provincia, Distrito
+
+Acciones
+- Enviar 'Credentials' y el backend debe validarlo y retornar ok.

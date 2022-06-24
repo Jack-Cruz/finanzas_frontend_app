@@ -1,12 +1,17 @@
-import { ActionType, SetId, UserActions } from "./useractions";
+import { ActionType, SetIdUsuario, SetUsuario, UserActions } from "./useractions";
 import { UserState } from "./userstate";
 
 export function userReducer(state: UserState, action: UserActions) : UserState {
     switch (action.type) {
-        case ActionType.SetId:
+        case ActionType.SetIdUsuario:
             return {
                 ...state,
-                id: action.payload
+                idusuario: action.payload
+            }
+        case ActionType.SetUsuario:
+            return {
+                ...state,
+                usuario: action.payload
             }
         default:
             return state;
@@ -14,7 +19,12 @@ export function userReducer(state: UserState, action: UserActions) : UserState {
 }
 
 // helper functions to simplify the caller
-export const setId = (id: string): SetId => ({
-    type: ActionType.SetId,
-    payload: id
+export const setIdUsuario = (idusuario: string): SetIdUsuario => ({
+    type: ActionType.SetIdUsuario,
+    payload: idusuario
+})
+
+export const setUsuario = (usuario: string): SetUsuario => ({
+    type: ActionType.SetUsuario,
+    payload: usuario
 })
