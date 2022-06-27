@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -30,7 +30,7 @@ export default function SignInPage() {
     event.preventDefault();
     authService.login(credentials)
       .then((response: any) => {
-        dispatch(setIdUsuario(response.data.idusuario))
+        dispatch(setIdUsuario(response.data.idbonista))
         dispatch(setUsuario(response.data.usuario))
         navigate(`/easy-finanzas`);              
       })
@@ -49,6 +49,7 @@ export default function SignInPage() {
   const navigateTo = (url: string) => {
     navigate(url);
   }
+
 
   return (
     <Container sx={{ backgroundColor: "#DAE6E9", height: "100vh" }}>

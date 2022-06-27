@@ -23,9 +23,10 @@ export default function MainRouter() {
         <Route path="signup" element={<SignUpPage/>} />
         <Route path="easy-finanzas" element={<Dashboard/>} >
           <Route index element={<MainPage/>} />
+          <Route path="crearbono/:id" element={<BonoPage/>} />
           <Route path="crearbono" element={<BonoPage/>} />
           <Route path="listabonos" element={<ListaBonos/>} />
-          <Route path="flujocaja/:id" element={<FlujodeCaja userName={user.usuario}/>} />
+          <Route path="flujocaja/:id" element={<FlujodeCaja />} />
         </Route>
       </Route>
     </Routes>

@@ -1,75 +1,21 @@
 import { Box, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import apiFlujo from '../api/api.flujo';
 import UserName from '../components/UserName';
+import { UserContext } from '../context/usercontext';
 import { FlujoCaja } from '../interfaces/Bono'
 
-const FlujodeCaja1: FlujoCaja[] = [
-  {
-    idflujo: '1',
-    idbono: '1',
-    n: 1,
-    bono: 12,
-    interes: 12,
-    cuota: 123,
-    amortizacion: 123,
-    prima: 12.2,
-    escudo: 1.2,
-    flujoemisor: 2.3,
-    flujoemisorescudo: 3.4,
-    flujobonista: 123,
-    flujoactual: 12,
-    faplazo: 1.2,
-    convexidad: 1
-  },
-  {
-    idflujo: '2',
-    idbono: '1',
-    n: 1,
-    bono: 12,
-    interes: 12,
-    cuota: 123,
-    amortizacion: 123,
-    prima: 12.2,
-    escudo: 1.2,
-    flujoemisor: 2.3,
-    flujoemisorescudo: 3.4,
-    flujobonista: 123,
-    flujoactual: 12,
-    faplazo: 1.2,
-    convexidad: 1
-  },
-  {
-    idflujo:'3',
-    idbono: '1',
-    n: 1,
-    bono: 12,
-    interes: 12,
-    cuota: 123,
-    amortizacion: 123,
-    prima: 12.2,
-    escudo: 1.2,
-    flujoemisor: 2.3,
-    flujoemisorescudo: 3.4,
-    flujobonista: 123,
-    flujoactual: 12,
-    faplazo: 1.2,
-    convexidad: 1
-  }
-];
 
-interface Props {
-  userName: string;
-}
-
-export default function FlujodeCaja({userName}: Props) {
+export default function FlujodeCaja() {
+  const { state } = useContext(UserContext);
   const [ flujos, setFlujos] = useState<FlujoCaja[]>([])
   const { id } = useParams();
 
   useEffect(() => {
     id && apiFlujo.get(id)
       .then((response: any) => {
+        console.log(response.data);
         setFlujos(response.data);
       })
       .catch((error: Error) => {
@@ -87,7 +33,7 @@ export default function FlujodeCaja({userName}: Props) {
           </Typography>
         </Grid>
         <Grid item>
-          <UserName userName={userName} />
+          <UserName userName={state.usuario ? state.usuario : 'No usuario'} />
         </Grid>
       </Grid>
       <Table size="small" sx={{ mt: 4}}>
@@ -105,9 +51,9 @@ export default function FlujodeCaja({userName}: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {FlujodeCaja1.map((flujo, index) => (
+          {flujos.map((flujo, index) => (
             <TableRow key={flujo.idflujo}>
-              <TableCell>{index}</TableCell>
+              <TableCell>{flujo.n}</TableCell>
               <TableCell>{flujo.bono}</TableCell>
               <TableCell>{flujo.interes}</TableCell>
               <TableCell>{flujo.cuota}</TableCell>

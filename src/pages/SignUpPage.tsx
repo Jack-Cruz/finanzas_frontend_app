@@ -25,9 +25,11 @@ export default function SignUpPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(bonista);
     authService.register(bonista)
       .then(() => {
         navigate(`/signin`);
+
       })
       .catch((e: Error) => {
         window.alert("Error de sistema")
@@ -146,6 +148,7 @@ export default function SignUpPage() {
               label="Contraseña"
               variant="outlined"
               name="contrasenia"
+              type="password"
               value={bonista.contrasenia}
               onChange={handleInput}
               sx={{ mt: 2 }}

@@ -2,8 +2,9 @@ import request from './api';
 import { Bonista, Credentials } from "../interfaces/Bonista";
 
 const authService = {
-  login: async (credential: Credentials) => request.post<Credentials>("authenticate/login", credential),
-  register: async (bonista: Bonista) => request.post<Bonista>("authenticate/register", bonista)
+  login: (credential: Credentials) => request.get<Bonista>(`Bonista/credential/${credential.usuario}/${credential.contrasenia}`),
+  register: (bonista: Bonista) => request.post<Bonista>("Bonista", bonista),
+  get: (id: string) => request.get(`Bonista/${id}`)
 }
 
 export default authService;

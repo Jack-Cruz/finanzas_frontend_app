@@ -1,6 +1,7 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+
  //axios.defaults.baseURL = "https://letskole.herokuapp.com/api/v1";
-axios.defaults.baseURL = "https://localhost:5001/api/v2/";
+axios.defaults.baseURL = "https://localhost:7207/";
 
 const request = { 
   get: async <T>(url: string) => await axios.get<T>(url),

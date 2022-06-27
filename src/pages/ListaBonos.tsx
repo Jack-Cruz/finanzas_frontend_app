@@ -1,35 +1,44 @@
-import React, { useEffect } from 'react'
-import { Box, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react'
+import { Box, Button, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import EditIcon from '@mui/icons-material/Edit';
 
 import UserName from '../components/UserName';
 import { BonoResumen } from '../interfaces/Bono';
+import apiBonos from '../api/api.bonos';
+import apiBonosResumen from '../api/api.bonoresumen';
+import { UserContext } from '../context/usercontext';
+import { Link } from 'react-router-dom';
 
 
-const bonos: BonoResumen[] = [
-  {
-    idresumen: '1',
-    idbono: '2',
-    precio: 12.2,
-    duracion: 2,
-    duracionmodificada: 2,
-    convexidad: 1.2,
-    TIR: 3.2
-  },
-  {
-    idresumen: '2',
-    idbono: '2',
-    precio: 100,
-    duracion: 1.55,
-    duracionmodificada: 1.85,
-    convexidad: 2.2,
-    TIR: 1.9
-  }
-];
 
 export default function ListaBonos() {
-  
+  const [bonosresumenes, setBonosResumenes] = useState<BonoResumen[]>([]);
+  const { state } = useContext(UserContext);
+
+  const deletebono = (idbono: string) => {
+    state.idusuario && apiBonos.delete(state.idusuario, idbono)
+      .then((response: any) => {
+        console.log(response.data);
+        setBonosResumenes(bonosresumenes.filter(bono => bono.idbono !== idbono))
+      }).catch((error: Error) => {
+        window.alert('Error de sistema')
+        console.log(error)
+      })
+  }
+
+  useEffect(() => {
+    state.idusuario && apiBonosResumen.get(state.idusuario)
+      .then((response: any) => {
+        console.log(response.data);
+        setBonosResumenes(response.data);
+      })
+      .catch((error: Error) => {
+        window.alert("Error de sistema");
+        console.log(error);
+      })
+  }, []);
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Grid container>
@@ -39,7 +48,7 @@ export default function ListaBonos() {
           </Typography>
         </Grid>
         <Grid item>
-          <UserName userName='asd' />
+          <UserName userName={state.usuario ? state.usuario : 'No usuario'} />
         </Grid>
       </Grid>
       <Table size="small" sx={{ mt: 4 }}>
@@ -51,24 +60,29 @@ export default function ListaBonos() {
             <TableCell>Duración modificada</TableCell>
             <TableCell>Convexidad</TableCell>
             <TableCell>TIR</TableCell>
+            <TableCell>Moneda</TableCell>
             <TableCell>Acciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {bonos.map((bono, index) => (
-            <TableRow key={bono.idresumen}>
+          {bonosresumenes.map((bonoresumen, index) => (
+            <TableRow key={bonoresumen.idresumen}>
               <TableCell>{index}</TableCell>
-              <TableCell>{bono.precio}</TableCell>
-              <TableCell>{bono.duracion}</TableCell>
-              <TableCell>{bono.duracionmodificada}</TableCell>
-              <TableCell>{bono.convexidad}</TableCell>
-              <TableCell>{bono.TIR}</TableCell>
+              <TableCell>{bonoresumen.precio}</TableCell>
+              <TableCell>{bonoresumen.duracion}</TableCell>
+              <TableCell>{bonoresumen.duracionmod}</TableCell>
+              <TableCell>{bonoresumen.convexidad}</TableCell>
+              <TableCell>{bonoresumen.tirbonista}</TableCell>
+              <TableCell>{bonoresumen.moneda == '' ? 'No especificado' : bonoresumen.moneda}</TableCell>
               <TableCell>
-                <IconButton>
+                <IconButton component={Link} to={`/easy-finanzas/flujocaja/${bonoresumen.idbono}`}>
                   <AttachMoneyIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton component={Button} onClick={() => deletebono(bonoresumen.idbono)}>
                   <DeleteOutlineRoundedIcon />
+                </IconButton>
+                <IconButton component={Link} to={`/easy-finanzas/crearbono/${bonoresumen.idbono}`}>
+                  <EditIcon />
                 </IconButton>
               </TableCell>
             </TableRow>

@@ -5,7 +5,7 @@ export interface Bono {
   valcomercial: number
   moneda: string
   anios: number
-  frecpago: string
+  frecpago: number
   tipotasa: string
   tasainteres: number
   tasadescuento: number
@@ -16,6 +16,7 @@ export interface Bono {
   perccolocacion: number
   percflotacion: number
   perccavali: number
+  capitalizacion: number
 }
 
 export interface BonoResumen {
@@ -23,9 +24,10 @@ export interface BonoResumen {
   idbono: string,
   precio: number,
   duracion: number,
-  duracionmodificada: number,
+  duracionmod: number,
   convexidad: number,
-  TIR: number,
+  tirbonista: number,
+  moneda: string
 }
 
 export interface FlujoCaja {
