@@ -9,17 +9,17 @@ export default function EasyFinanzas() {
     <>
       <div className="container p-4">
         <div className="row">
-          <div className="col-md-7">
+          <div className="col-md-8">
             <h1 className="text-dark">Easy-Finanzas</h1>
           </div>
-          <div className="col-md-5">
-            <div className="row">
+          <div className="col-md-4">
+            <div className="d-flex justify-content-between">
               <Link to={`/signin`}>
-                Iniciar Sesion
+                <button className="btn btn-primary">Iniciar sesión</button>
               </Link>
-              <div className="col-md-2"></div>
+              
               <Link to={`/signup`}>
-                Registro
+                <button className="btn btn-primary">Registro</button>
               </Link>
             </div>
           </div>
@@ -29,7 +29,7 @@ export default function EasyFinanzas() {
 
       <div className="row bg-secondary">
         <div className="col-md-7">
-          <img src={logo} alt="imagen finanzas_logo" width="850" height="380" />
+          <img src={logo} alt="imagen finanzas_logo" width="auto" height="380" />
         </div>
         <div className="col-md-5">
           <h1 className="text-center align-middle p-5 mt-5 text-dark bg-secondary">

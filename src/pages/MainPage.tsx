@@ -1,4 +1,4 @@
-import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import { Box, ButtonBase, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import UserName from '../components/UserName'
 import pen from '../images/pen-icon.webp'
@@ -6,10 +6,13 @@ import wallet from '../images/waller.png'
 import statistic from '../images/icon-statistics-1.jpg'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../context/usercontext'
+import SimpleDialog from '../components/Dialog'
+import mainpagehelp from '../images/help-mainpage.jpg';
 
 export default function MainPage() {
 
   const { state } = useContext(UserContext);
+  const [ openHelp, setOpenHelp ] = React.useState(false);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column"}}>
@@ -30,7 +33,7 @@ export default function MainPage() {
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                Interfaz Intuitivo
+                Crear un bono
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -52,28 +55,20 @@ export default function MainPage() {
             </CardContent>
           </CardActionArea>
         </Card>
-        <Card sx={{ maxWidth: 200}}>
-          <CardActionArea component={Link} to="/easy-finanzas/flujocaja/1">
-            <CardMedia 
-              component="img"
-              height="100"
-              width="100"
-              image={statistic}
-              alt="statistic"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Resultados rápidos
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
       </Box>
       <Grid container justifyContent="flex-end">
         <Grid item>
-          <Typography color="blue">¿Necesita ayuda?</Typography>
+          <ButtonBase onClick={() => setOpenHelp(true)}>
+            <Typography color="blue">¿Necesita ayuda?</Typography>
+          </ButtonBase>
         </Grid>
       </Grid>
+      <SimpleDialog
+        open={openHelp}
+        onClose={() => setOpenHelp(false)}
+        imageurl={mainpagehelp}
+        title={"Ayuda main page"}
+      />
     </Box>
   )
 }

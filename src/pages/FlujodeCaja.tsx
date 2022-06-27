@@ -1,16 +1,18 @@
-import { Box, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, ButtonBase, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import apiFlujo from '../api/api.flujo';
 import UserName from '../components/UserName';
 import { UserContext } from '../context/usercontext';
 import { FlujoCaja } from '../interfaces/Bono'
-
+import flujohelp from '../images/help-flujo.jpg';
+import SimpleDialog from '../components/Dialog';
 
 export default function FlujodeCaja() {
   const { state } = useContext(UserContext);
   const [ flujos, setFlujos] = useState<FlujoCaja[]>([])
   const { id } = useParams();
+  const [ openHelp, setOpenHelp ] = React.useState(false);
 
   useEffect(() => {
     id && apiFlujo.get(id)
@@ -54,18 +56,31 @@ export default function FlujodeCaja() {
           {flujos.map((flujo, index) => (
             <TableRow key={flujo.idflujo}>
               <TableCell>{flujo.n}</TableCell>
-              <TableCell>{flujo.bono}</TableCell>
-              <TableCell>{flujo.interes}</TableCell>
-              <TableCell>{flujo.cuota}</TableCell>
-              <TableCell>{flujo.amortizacion}</TableCell>
-              <TableCell>{flujo.prima}</TableCell>
-              <TableCell>{flujo.escudo}</TableCell>
-              <TableCell>{flujo.flujobonista}</TableCell>
-              <TableCell>{flujo.flujoactual}</TableCell>
+              <TableCell>{flujo.bono.toFixed(2)}</TableCell>
+              <TableCell>{flujo.interes.toFixed(2)}</TableCell>
+              <TableCell>{flujo.cuota.toFixed(2)}</TableCell>
+              <TableCell>{flujo.amortizacion.toFixed(2)}</TableCell>
+              <TableCell>{flujo.prima.toFixed(2)}</TableCell>
+              <TableCell>{flujo.escudo.toFixed(2)}</TableCell>
+              <TableCell>{flujo.flujobonista.toFixed(2)}</TableCell>
+              <TableCell>{flujo.flujoactual.toFixed(2)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <Grid container justifyContent="flex-end" sx={{ mt: 5}}>
+        <Grid item>
+          <ButtonBase onClick={() => setOpenHelp(true)}>
+            <Typography color="blue">¿Necesita ayuda?</Typography>
+          </ButtonBase>
+        </Grid>
+      </Grid>
+      <SimpleDialog
+        open={openHelp}
+        onClose={() => setOpenHelp(false)}
+        imageurl={flujohelp}
+        title={"Ayuda main page"}
+      />
     </Box>
   )
 }

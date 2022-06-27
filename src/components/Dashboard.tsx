@@ -3,6 +3,7 @@ import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import {
   Box,
   Button,
+  ButtonBase,
   Container,
   CssBaseline,
   Divider,
@@ -95,7 +96,9 @@ export default function Dashboard(props: any) {
             <IconButton onClick={toggleDrawer} >
               <MenuIcon />
             </IconButton>
-            <Typography sx={{ pl: 3, color: "white"}} variant="h6">Easy-Finanzas</Typography>
+            <ButtonBase onClick={() => { navigate('/easy-finanzas')}}>
+              <Typography sx={{ pl: 3, color: "white"}} variant="h6">Easy-Finanzas</Typography>
+            </ButtonBase>
           </Toolbar>
           <Divider />
           <List
@@ -118,18 +121,22 @@ export default function Dashboard(props: any) {
               <ListItemText primary="Operaciones" primaryTypographyProps={{variant: "h6"}} />
             </ListItemButton>
           </List>
-          <Button
-            onClick={closeSesion}
-            sx={{
-              px: [1],
-              bgcolor:"secondary.main"
-            }}
-          >
-            <IconButton onClick={toggleDrawer} size="large">
-              <LogoutIcon />
-            </IconButton>
-            <Typography sx={{ pl: [3], color:"black" }} variant="h6">Cerrar Sesion</Typography>
-          </Button>
+          
+            <ButtonBase
+              sx={{
+                px: [1],
+                bgcolor:"secondary.main",
+                display: "inline",
+              }}
+              onClick={closeSesion} 
+            >
+              <IconButton size="large" sx={{ display: 'inline', mb: 1 }}>
+                <LogoutIcon />
+              </IconButton>
+              <Typography sx={{ pl: [3], color:"black", display: 'inline'}} variant="h6">Cerrar sesion</Typography>
+            </ButtonBase>
+          
+
         </Drawer>
         <Box
           component="main"

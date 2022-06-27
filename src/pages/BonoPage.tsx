@@ -23,6 +23,7 @@ import {
   Select,
   SelectChangeEvent,
   MenuItem,
+  ButtonBase,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CreateIcon from "@mui/icons-material/Create";
@@ -36,6 +37,8 @@ import apiBonos from "..//api/api.bonos";
 import UserName from "../components/UserName";
 import { UserContext } from "../context/usercontext";
 import { useNavigate, useParams } from "react-router-dom";
+import  bonohelp from "../images/help-bono.jpg";
+import SimpleDialog from "../components/Dialog";
 
 const initialbono: Bono = {
   valnominal: 0,
@@ -61,6 +64,7 @@ function BonoPage() {
   const [bono, setBono] = React.useState<Bono>(initialbono);
   const navigate = useNavigate();
   const { id } = useParams();
+  const [ openHelp, setOpenHelp ] = React.useState(false);
 
   useEffect(() => {
     if (id) {
@@ -98,7 +102,9 @@ function BonoPage() {
     bono.percestructuracion = Number(bono.percestructuracion);
     bono.percflotacion = Number(bono.percflotacion);
     bono.perccavali = Number(bono.perccavali);
+    bono.perccolocacion = Number(bono.perccolocacion);
     bono.capitalizacion = Number(bono.capitalizacion);
+
 
     console.log(bono);
     if(id) {
@@ -259,7 +265,7 @@ function BonoPage() {
               fullWidth
             />
             <TextField
-              label="Impuesto"
+              label="Impuesto a la renta"
               variant="outlined"
               name="imprenta"
               value={bono.imprenta}
@@ -363,6 +369,19 @@ function BonoPage() {
           </Button>
         </Box>
       </Box>
+      <Grid container justifyContent="flex-end">
+        <Grid item>
+          <ButtonBase onClick={() => setOpenHelp(true)}>
+            <Typography color="blue">¿Necesita ayuda?</Typography>
+          </ButtonBase>
+        </Grid>
+      </Grid>
+      <SimpleDialog
+        open={openHelp}
+        onClose={() => setOpenHelp(false)}
+        imageurl={bonohelp}
+        title={"Ayuda main page"}
+      />
     </Box>
   );
 }

@@ -7,6 +7,7 @@ import {
   Box,
   TextField,
   Button,
+  ButtonBase,
 } from "@mui/material";
 import finanzas from "../images/easy_finanzas.jpg";
 import { Credentials } from "../interfaces/Bonista";
@@ -52,7 +53,7 @@ export default function SignInPage() {
 
 
   return (
-    <Container sx={{ backgroundColor: "#DAE6E9", height: "100vh" }}>
+    <Box component="main" sx={{ backgroundColor: "#DAE6E9", height: "100vh" }}>
       <Container
         maxWidth="xs"
         sx={{ display: "flex", flexDirection: "column", pt: 5 }}
@@ -82,6 +83,7 @@ export default function SignInPage() {
 
           <Grid container alignItems="center" sx={{ flexDirection: "column" }}>
             <Grid item xs={12}>
+              <ButtonBase component={Link} to='/'>
               <Typography
                 component="h2"
                 variant="h4"
@@ -95,6 +97,7 @@ export default function SignInPage() {
               >
                 Easy-Finanzas
               </Typography>
+              </ButtonBase>
             </Grid>
             <Grid item md={6}>
               <Box
@@ -146,15 +149,7 @@ export default function SignInPage() {
                   ¿Eres miembro nuevo?
                 </Button>
               </Grid>
-              <Grid item sx={{ color: "blue", backgroundColor: "#DAE6E9"}}>
-                <Button
-                  component={Link}
-                  to='/signup'
-                  sx={{ color: "blue", backgroundColor: "#DAE6E9"}}
-                >
-                  ¿Olvidé la contraseña?
-                </Button>
-              </Grid>
+              
             </Grid>
           </Grid>
         </Paper>
@@ -162,6 +157,6 @@ export default function SignInPage() {
           Easy-Finanzas con la finalidad de ayudar a tus finanzas.
         </Typography>
       </Container>
-    </Container>
+    </Box>
   );
 }

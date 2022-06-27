@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Box, Button, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, ButtonBase, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,12 +10,14 @@ import apiBonos from '../api/api.bonos';
 import apiBonosResumen from '../api/api.bonoresumen';
 import { UserContext } from '../context/usercontext';
 import { Link } from 'react-router-dom';
-
+import SimpleDialog from '../components/Dialog';
+import listabonohelp from '../images/help-listabonos.jpg';
 
 
 export default function ListaBonos() {
   const [bonosresumenes, setBonosResumenes] = useState<BonoResumen[]>([]);
   const { state } = useContext(UserContext);
+  const [ openHelp, setOpenHelp ] = React.useState(false);
 
   const deletebono = (idbono: string) => {
     state.idusuario && apiBonos.delete(state.idusuario, idbono)
@@ -68,7 +70,7 @@ export default function ListaBonos() {
           {bonosresumenes.map((bonoresumen, index) => (
             <TableRow key={bonoresumen.idresumen}>
               <TableCell>{index}</TableCell>
-              <TableCell>{bonoresumen.precio}</TableCell>
+              <TableCell>{bonoresumen.precio.toFixed(2)}</TableCell>
               <TableCell>{bonoresumen.duracion}</TableCell>
               <TableCell>{bonoresumen.duracionmod}</TableCell>
               <TableCell>{bonoresumen.convexidad}</TableCell>
@@ -89,6 +91,22 @@ export default function ListaBonos() {
           ))}
         </TableBody>
       </Table>
+
+      <Grid container justifyContent="flex-end" sx={{ mt: 5}}>
+        <Grid item>
+          <ButtonBase onClick={() => setOpenHelp(true)}>
+            <Typography color="blue">¿Necesita ayuda?</Typography>
+          </ButtonBase>
+        </Grid>
+      </Grid>
+
+      <SimpleDialog
+        open={openHelp}
+        onClose={() => setOpenHelp(false)}
+        imageurl={listabonohelp}
+        title={"Ayuda main page"}
+      />
+
     </Box>
   )
 }
