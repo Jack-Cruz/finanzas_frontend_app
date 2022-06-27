@@ -105,6 +105,11 @@ function BonoPage() {
     bono.perccolocacion = Number(bono.perccolocacion);
     bono.capitalizacion = Number(bono.capitalizacion);
 
+    if(bono.valnominal < 0.0 || bono.valcomercial < 0.0 || bono.anios < 0.0 || bono.frecpago < 0.0 ||
+      bono.tasainteres < 0.0 || bono.tasadescuento < 0.0 || bono.imprenta < 0.0 || bono.percprima < 0.0 || bono.percestructuracion < 0.0 || bono.percflotacion < 0.0 || bono.perccavali < 0.0 || bono.perccolocacion < 0.0 || bono.capitalizacion < 0.0) {
+        window.alert("Error de sistema");
+        return;
+    }
 
     console.log(bono);
     if(id) {
@@ -154,6 +159,7 @@ function BonoPage() {
               onChange={handleInput}
               fullWidth
               sx={{ mt: 2}}
+              
               // type="number"
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>

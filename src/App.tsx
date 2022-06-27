@@ -24,7 +24,8 @@ const mdTheme = createTheme({
       contrastText: "#000",
     },
     secondary: {
-      main: "#4DD7FA",
+       main: "#4DD7FA",
+      //main: "#4D0000",
       contrastText: "#000",
     },
     info: {
